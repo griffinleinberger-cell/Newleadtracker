@@ -100,11 +100,13 @@ header h1 { font-family: ‘Playfair Display’, serif; font-size: 30px; color: 
 .btn-secondary { padding: 9px 16px; background: var(–surface); border: 1.5px solid var(–border); border-radius: 20px; color: var(–text2); font-family: ‘Nunito’, sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; white-space: nowrap; box-shadow: 0 2px 6px var(–shadow); }
 .btn-secondary:hover { border-color: var(–peach); color: var(–peach-dark); }
 
-/* TABS */
+/* MAIN TABS */
 .tabs { display: flex; gap: 4px; background: var(–surface); border: 1.5px solid var(–border); border-radius: 16px; padding: 5px; margin-bottom: 16px; box-shadow: 0 2px 8px var(–shadow); }
 .tab { flex: 1; padding: 8px 6px; border: none; background: transparent; color: var(–text2); font-family: ‘Nunito’, sans-serif; font-size: 11px; font-weight: 700; cursor: pointer; border-radius: 12px; transition: all 0.2s; text-align: center; }
 .tab.active { background: var(–lavender); color: #3a2570; }
 .tab:not(.active):hover { background: var(–lavender-light); }
+.tab.tab-showings.active { background: linear-gradient(135deg, #f5b8a0, #e8906e); color: white; }
+.tab.tab-showings:not(.active):hover { background: var(–peach-light); }
 
 /* NOTIFY BAR */
 .notify-bar { background: var(–mint-light); border: 1.5px solid var(–mint); border-radius: 14px; padding: 10px 16px; margin-bottom: 16px; font-size: 13px; font-weight: 600; color: #1a6a50; display: none; }
@@ -174,6 +176,84 @@ header h1 { font-family: ‘Playfair Display’, serif; font-size: 30px; color: 
 .empty .icon { font-size: 40px; margin-bottom: 10px; }
 .empty p { font-size: 14px; font-weight: 600; }
 
+/* ── TODAY’S SHOWINGS TAB ── */
+.showings-section { display: flex; flex-direction: column; gap: 16px; }
+
+.showings-paste-box { background: var(–surface); border: 1.5px dashed var(–peach); border-radius: 18px; padding: 18px; }
+.showings-paste-box label { display: block; font-size: 11px; font-weight: 800; color: var(–text2); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+.showings-paste-box textarea { width: 100%; background: var(–bg); border: 1.5px solid var(–border); border-radius: 12px; padding: 10px 14px; color: var(–text); font-family: ‘Nunito’, sans-serif; font-size: 12px; font-weight: 600; outline: none; resize: vertical; min-height: 80px; transition: border-color 0.2s; }
+.showings-paste-box textarea:focus { border-color: var(–peach); box-shadow: 0 0 0 3px var(–peach-light); }
+.showings-paste-actions { display: flex; gap: 8px; margin-top: 10px; align-items: center; }
+.btn-load-showings { padding: 9px 20px; background: linear-gradient(135deg, var(–peach), var(–peach-dark)); color: white; border: none; border-radius: 14px; font-family: ‘Nunito’, sans-serif; font-size: 13px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 14px rgba(232,144,110,0.35); transition: all 0.2s; }
+.btn-load-showings:hover { transform: translateY(-1px); }
+.btn-clear-showings { padding: 9px 16px; background: var(–surface); border: 1.5px solid var(–border); border-radius: 14px; color: var(–text2); font-family: ‘Nunito’, sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+.btn-clear-showings:hover { border-color: var(–peach); color: var(–peach-dark); }
+.paste-hint { font-size: 11px; color: var(–text3); font-weight: 600; }
+
+/* SHOWING CARDS */
+.showing-card { background: var(–surface); border: 1.5px solid var(–border); border-radius: 20px; padding: 16px 18px; box-shadow: 0 4px 16px var(–shadow); animation: slideIn 0.3s ease; position: relative; overflow: hidden; }
+.showing-card::before { content: ‘’; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; border-radius: 20px 0 0 20px; }
+.showing-card.status-confirmed::before { background: linear-gradient(180deg, #a8d8c8, #74c4aa); }
+.showing-card.status-pending::before { background: linear-gradient(180deg, #f5a623, #f5d060); }
+.showing-card.status-misassigned::before { background: linear-gradient(180deg, #f5b8a0, #e8906e); }
+.showing-card.status-attended::before { background: linear-gradient(180deg, #74b9ff, #a8cce8); }
+.showing-card.status-noshow::before { background: linear-gradient(180deg, #f0b8c8, #e88aaa); }
+
+.showing-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+.showing-time { font-family: ‘Playfair Display’, serif; font-size: 22px; font-weight: 700; color: var(–text); line-height: 1; }
+.showing-address { font-size: 14px; font-weight: 800; color: var(–text); margin-top: 3px; }
+.showing-status-pill { padding: 5px 12px; border-radius: 12px; font-size: 11px; font-weight: 800; white-space: nowrap; flex-shrink: 0; }
+.pill-confirmed { background: var(–mint-light); color: #1a6a50; border: 1px solid var(–mint); }
+.pill-pending { background: #fff3d0; color: #a06800; border: 1px solid #f5dfa0; }
+.pill-misassigned { background: var(–peach-light); color: #8a3a10; border: 1px solid var(–peach); }
+.pill-attended { background: var(–sky-light); color: #1a4a8a; border: 1px solid var(–sky); }
+.pill-noshow { background: var(–blush-light); color: #8a1a3a; border: 1px solid var(–blush); }
+
+.showing-leads { display: flex; flex-direction: column; gap: 6px; margin: 10px 0; }
+.showing-lead-row { display: flex; align-items: center; gap: 8px; background: var(–bg); border-radius: 10px; padding: 7px 12px; }
+.showing-lead-name { font-size: 13px; font-weight: 700; color: var(–text); flex: 1; }
+.showing-lead-phone { font-size: 12px; font-weight: 600; color: var(–text2); }
+.showing-lead-phone a { color: var(–peach-dark); text-decoration: none; font-weight: 700; }
+.showing-lead-phone a:hover { text-decoration: underline; }
+
+.showing-note { display: flex; align-items: flex-start; gap: 6px; background: var(–peach-light); border: 1px solid var(–peach); border-radius: 10px; padding: 8px 12px; font-size: 12px; font-weight: 700; color: #8a3a10; margin: 8px 0; }
+
+.showing-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(–border); }
+.btn-attended { padding: 9px 18px; background: linear-gradient(135deg, var(–mint-light), var(–mint)); border: 1.5px solid var(–mint); border-radius: 14px; color: #1a5a44; font-family: ‘Nunito’, sans-serif; font-size: 13px; font-weight: 800; cursor: pointer; transition: all 0.2s; }
+.btn-attended:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(168,216,200,0.5); }
+.btn-noshow { padding: 9px 18px; background: var(–blush-light); border: 1.5px solid var(–blush); border-radius: 14px; color: #8a1a3a; font-family: ‘Nunito’, sans-serif; font-size: 13px; font-weight: 800; cursor: pointer; transition: all 0.2s; }
+.btn-noshow:hover { background: var(–blush); }
+.btn-undo-showing { padding: 9px 14px; background: var(–surface); border: 1.5px solid var(–border); border-radius: 14px; color: var(–text2); font-family: ‘Nunito’, sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+.btn-undo-showing:hover { border-color: var(–peach); color: var(–peach-dark); }
+
+.showing-outcome-badge { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 12px; font-size: 13px; font-weight: 700; margin-top: 10px; }
+.outcome-attended { background: var(–sky-light); color: #1a4a8a; border: 1px solid var(–sky); }
+.outcome-noshow { background: var(–blush-light); color: #8a1a3a; border: 1px solid var(–blush); }
+
+/* ADD TO DATABASE FORM */
+.add-db-form { background: var(–lavender-light); border: 1.5px solid var(–lavender); border-radius: 16px; padding: 16px; margin-top: 12px; animation: slideIn 0.3s ease; }
+.add-db-form h4 { font-family: ‘Playfair Display’, serif; font-size: 16px; color: #3a2570; margin-bottom: 12px; }
+.add-db-form .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+.add-db-form .form-group { margin-bottom: 0; }
+.add-db-form label { display: block; font-size: 10px; font-weight: 800; color: #5a3a9a; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 5px; }
+.add-db-form input, .add-db-form select, .add-db-form textarea { width: 100%; background: white; border: 1.5px solid var(–lavender); border-radius: 10px; padding: 8px 12px; color: var(–text); font-family: ‘Nunito’, sans-serif; font-size: 13px; font-weight: 600; outline: none; transition: border-color 0.2s; }
+.add-db-form input:focus, .add-db-form select:focus, .add-db-form textarea:focus { border-color: #8a60d0; box-shadow: 0 0 0 3px rgba(197,184,232,0.3); }
+.add-db-form-actions { display: flex; gap: 8px; margin-top: 12px; }
+.btn-save-db { padding: 9px 20px; background: linear-gradient(135deg, var(–lavender), #8a60d0); border: none; border-radius: 12px; color: white; font-family: ‘Nunito’, sans-serif; font-size: 13px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 14px rgba(197,184,232,0.5); transition: all 0.2s; }
+.btn-save-db:hover { transform: translateY(-1px); }
+.btn-cancel-db { padding: 9px 16px; background: transparent; border: 1.5px solid var(–lavender); border-radius: 12px; color: #5a3a9a; font-family: ‘Nunito’, sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; }
+
+/* FIRE SLIDER STUFF IN MODAL */
+.fire-slider-wrap { background: var(–bg); border: 1.5px solid var(–border); border-radius: 14px; padding: 14px 16px; }
+.fire-display { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px; }
+.fire-display .big-fire { font-size: 36px; }
+.fire-display .score-info .score-big { font-family: ‘Playfair Display’, serif; font-size: 36px; font-weight: 700; line-height: 1; transition: color 0.2s; }
+.fire-display .score-info .score-label { font-size: 12px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; transition: color 0.2s; }
+input[type=range].fire-range { width: 100%; -webkit-appearance: none; height: 6px; border-radius: 3px; outline: none; border: none; padding: 0; cursor: pointer; margin-bottom: 6px; }
+input[type=range].fire-range::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: white; border: 3px solid var(–peach-dark); box-shadow: 0 2px 8px rgba(0,0,0,0.15); cursor: pointer; }
+.fire-ticks { display: flex; justify-content: space-between; padding: 0 4px; }
+.fire-ticks span { font-size: 10px; color: var(–text3); font-weight: 700; }
+
 /* MODALS */
 .modal-overlay { position: fixed; inset: 0; background: rgba(61,46,36,0.35); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; z-index: 100; padding: 20px; animation: fadeIn 0.2s ease; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -185,17 +265,6 @@ header h1 { font-family: ‘Playfair Display’, serif; font-size: 30px; color: 
 .form-group label { display: block; font-size: 11px; font-weight: 800; color: var(–text2); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
 .form-group input, .form-group select, .form-group textarea { width: 100%; background: var(–bg); border: 1.5px solid var(–border); border-radius: 12px; padding: 10px 14px; color: var(–text); font-family: ‘Nunito’, sans-serif; font-size: 14px; font-weight: 600; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(–peach); box-shadow: 0 0 0 3px var(–peach-light); }
-
-/* FIRE SLIDER */
-.fire-slider-wrap { background: var(–bg); border: 1.5px solid var(–border); border-radius: 14px; padding: 14px 16px; }
-.fire-display { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px; }
-.fire-display .big-fire { font-size: 36px; }
-.fire-display .score-info .score-big { font-family: ‘Playfair Display’, serif; font-size: 36px; font-weight: 700; line-height: 1; transition: color 0.2s; }
-.fire-display .score-info .score-label { font-size: 12px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; transition: color 0.2s; }
-input[type=range].fire-range { width: 100%; -webkit-appearance: none; height: 6px; border-radius: 3px; outline: none; border: none; padding: 0; cursor: pointer; margin-bottom: 6px; }
-input[type=range].fire-range::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: white; border: 3px solid var(–peach-dark); box-shadow: 0 2px 8px rgba(0,0,0,0.15); cursor: pointer; }
-.fire-ticks { display: flex; justify-content: space-between; padding: 0 4px; }
-.fire-ticks span { font-size: 10px; color: var(–text3); font-weight: 700; }
 
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; }
@@ -235,6 +304,7 @@ input[type=range].fire-range::-webkit-slider-thumb { -webkit-appearance: none; w
 .stat-card { padding: 10px 8px; }
 .stat-card .num { font-size: 22px; }
 .form-row { grid-template-columns: 1fr; }
+.add-db-form .form-row { grid-template-columns: 1fr; }
 header h1 { font-size: 26px; }
 }
 </style>
@@ -258,7 +328,7 @@ header h1 { font-size: 26px; }
     <div class="stat-card s-active"><div class="emoji">✨</div><div class="num" id="stat-active">0</div><div class="lbl">Active</div></div>
   </div>
 
-  <!-- CITY FILTER -->
+  <!-- CITY FILTER (hidden on showings tab) -->
 
   <div class="city-filter-row" id="city-filter-row">
     <button class="city-btn active" data-city="all" onclick="setCity('all')">🗺 All Cities</button>
@@ -270,8 +340,9 @@ header h1 { font-size: 26px; }
 
   <div id="notify-bar" class="notify-bar"></div>
 
-  <div class="controls">
-    <!-- PROPERTY DROPDOWN -->
+  <!-- CONTROLS (hidden on showings tab) -->
+
+  <div class="controls" id="lead-controls">
     <div class="prop-dropdown-wrap" id="prop-dropdown-wrap">
       <button class="prop-dropdown-btn" id="prop-dropdown-btn" onclick="togglePropDropdown()">
         <span id="prop-dropdown-label">All Properties</span>
@@ -283,14 +354,18 @@ header h1 { font-size: 26px; }
     <button class="btn-secondary" onclick="openPropModal()">🏠 Properties</button>
   </div>
 
+  <!-- TABS -->
+
   <div class="tabs">
     <button class="tab active" onclick="setTab('active',this)">Active</button>
     <button class="tab" onclick="setTab('due',this)">Due Today</button>
     <button class="tab" onclick="setTab('disabled',this)">Disabled</button>
     <button class="tab" onclick="setTab('all',this)">All</button>
+    <button class="tab tab-showings" onclick="setTab('showings',this)">📅 Today's Showings</button>
   </div>
 
-  <div class="leads-grid" id="leads-grid"></div>
+  <div id="leads-grid" class="leads-grid"></div>
+  <div id="showings-section" class="showings-section" style="display:none"></div>
 </div>
 
 <!-- ADD/EDIT MODAL -->
@@ -374,30 +449,33 @@ header h1 { font-size: 26px; }
 
 <script>
 // ── CONSTANTS ─────────────────────────────────────────────────────────────────
-const STORAGE_KEY = 'pm_leads_v4';
-const PROPS_KEY   = 'pm_props_v4';
-const CITIES      = ['Charleston', 'Orangeburg', 'Sumter', 'Charlotte'];
-const CITY_DOTS   = { Charleston: '#74b9ff', Orangeburg: '#a8d8c8', Sumter: '#c5b8e8', Charlotte: '#f5b8a0' };
+const STORAGE_KEY    = 'pm_leads_v4';
+const PROPS_KEY      = 'pm_props_v4';
+const SHOWINGS_KEY   = 'pm_showings_v1';
+const CITIES         = ['Charleston', 'Orangeburg', 'Sumter', 'Charlotte'];
+const CITY_DOTS      = { Charleston: '#74b9ff', Orangeburg: '#a8d8c8', Sumter: '#c5b8e8', Charlotte: '#f5b8a0' };
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
 let leads      = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-// props stored as [{name, city}]
 let properties = JSON.parse(localStorage.getItem(PROPS_KEY) || JSON.stringify([
   {name:'Sumter Home', city:'Sumter'},
   {name:'321 Fairington Dr', city:'Charleston'}
 ]));
-// migrate old string-format props
 properties = properties.map(p => typeof p === 'string' ? {name: p, city: 'Charleston'} : p);
+
+// Showings state — persisted so outcomes survive refresh
+let showings = JSON.parse(localStorage.getItem(SHOWINGS_KEY) || '[]');
 
 let editingId    = null;
 let currentTab   = 'active';
-let currentProp  = 'all';   // 'all' or property name
-let currentCity  = 'all';   // 'all' or city name
+let currentProp  = 'all';
+let currentCity  = 'all';
 let propDropOpen = false;
 
 function save() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
   localStorage.setItem(PROPS_KEY, JSON.stringify(properties));
+  localStorage.setItem(SHOWINGS_KEY, JSON.stringify(showings));
 }
 
 // ── NOTIFICATIONS ─────────────────────────────────────────────────────────────
@@ -406,9 +484,7 @@ function initNotifications() {
   if (Notification.permission === 'default') {
     document.getElementById('notif-banner').style.display = 'flex';
   }
-  if (Notification.permission === 'granted') {
-    scheduleNotifications();
-  }
+  if (Notification.permission === 'granted') scheduleNotifications();
 }
 
 function requestNotifPermission() {
@@ -430,25 +506,9 @@ function scheduleNotifications() {
     if (delay > 0 && delay < 24 * 3600000) {
       setTimeout(() => {
         if (Notification.permission === 'granted') {
-          new Notification('Follow-up due! 🔥', {
-            body: `Time to follow up with ${l.name} — ${l.property}`,
-            icon: '🏠'
-          });
+          new Notification('Follow-up due! 🔥', { body: `Time to follow up with ${l.name} — ${l.property}` });
         }
       }, delay);
-    }
-  });
-}
-
-function fireImmediateNotificationsForDue() {
-  if (Notification.permission !== 'granted') return;
-  leads.forEach(l => {
-    if (l.disabled) return;
-    const st = getFollowupStatus(l);
-    if (st.overdue) {
-      new Notification('Overdue follow-up ⚠️', {
-        body: `${l.name} at ${l.property} is overdue for a follow-up!`
-      });
     }
   });
 }
@@ -495,7 +555,18 @@ function render() {
   checkAutoDisable();
   updateStats();
   renderPropDropdown();
-  renderLeads();
+
+  const isShowings = currentTab === 'showings';
+  document.getElementById('city-filter-row').style.display  = isShowings ? 'none' : 'flex';
+  document.getElementById('lead-controls').style.display    = isShowings ? 'none' : 'flex';
+  document.getElementById('leads-grid').style.display       = isShowings ? 'none' : 'flex';
+  document.getElementById('showings-section').style.display = isShowings ? 'flex' : 'none';
+
+  if (isShowings) {
+    renderShowings();
+  } else {
+    renderLeads();
+  }
 }
 
 function updateStats() {
@@ -510,314 +581,524 @@ function updateStats() {
   document.getElementById('stat-active').textContent  = active;
 }
 
+// ── TODAY'S SHOWINGS ──────────────────────────────────────────────────────────
+function loadShowingsFromJSON() {
+  const raw = document.getElementById('showings-paste-input').value.trim();
+  if (!raw) { showNotify('⚠️ Nothing to load — paste your JSON first.'); return; }
+  try {
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) throw new Error('Not an array');
+    // Merge: preserve outcomes for existing showings, add new ones
+    const today = new Date().toDateString();
+    // Remove any showings from a previous day that have no outcome
+    showings = showings.filter(s => s.outcome || new Date(s.loadedAt || Date.now()).toDateString() === today);
+    parsed.forEach(s => {
+      const existing = showings.find(x => x.address === s.address && x.time === s.time);
+      if (!existing) {
+        showings.push({
+          id: 'sh_' + Date.now() + Math.random().toString(36).slice(2),
+          time: s.time || '',
+          address: s.address || '',
+          leads: s.leads || [],
+          status: s.status || 'confirmed',
+          note: s.note || '',
+          outcome: null,
+          loadedAt: Date.now()
+        });
+      }
+    });
+    save();
+    document.getElementById('showings-paste-input').value = '';
+    renderShowings();
+    showNotify(`✅ Loaded ${parsed.length} showing(s) for today.`);
+  } catch(e) {
+    showNotify('❌ Invalid JSON — check the format and try again.');
+  }
+}
+
+function clearShowings() {
+  if (!confirm('Clear all today\'s showings? This cannot be undone.')) return;
+  showings = []; save(); renderShowings();
+  showNotify('🗑️ Today\'s showings cleared.');
+}
+
+function markShowingOutcome(id, outcome) {
+  const s = showings.find(x => x.id === id);
+  if (!s) return;
+  s.outcome = outcome;
+  save();
+  renderShowings();
+  if (outcome === 'noshow') {
+    showNotify(`❌ No-show logged for ${s.address}.`);
+  }
+}
+
+function undoShowingOutcome(id) {
+  const s = showings.find(x => x.id === id);
+  if (!s) return;
+  s.outcome = null;
+  s.dbEntry = null;
+  save(); renderShowings();
+}
+
+function saveToDatabase(id) {
+  const nameVal  = document.getElementById('db-name-'  + id).value.trim();
+  const phoneVal = document.getElementById('db-phone-' + id).value.trim();
+  const propVal  = document.getElementById('db-prop-'  + id).value;
+  const scoreVal = parseInt(document.getElementById('db-score-' + id).value);
+  const notesVal = document.getElementById('db-notes-' + id).value.trim();
+
+  if (!nameVal) { alert('Name is required.'); return; }
+  if (!propVal) { alert('Please select a property.'); return; }
+
+  const now = Date.now();
+  leads.push({
+    id: 'l_' + now + Math.random().toString(36).slice(2),
+    name: nameVal,
+    phone: phoneVal,
+    notes: notesVal,
+    property: propVal,
+    score: scoreVal,
+    created: now,
+    lastFollowup: null,
+    lowScoreSince: scoreVal <= 5 ? now : null,
+    disabled: false,
+    source: 'showing'
+  });
+
+  const s = showings.find(x => x.id === id);
+  if (s) { s.dbEntry = { name: nameVal, property: propVal }; }
+
+  save();
+  renderShowings();
+  showNotify(`✅ ${nameVal} added to your lead database!`);
+}
+
+function renderShowings() {
+  const section = document.getElementById('showings-section');
+  const today = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+
+  // Build property options for the DB form
+  let propOptions = '';
+  CITIES.forEach(city => {
+    const cityProps = properties.filter(p => p.city === city);
+    if (!cityProps.length) return;
+    propOptions += `<optgroup label="${city}">`;
+    cityProps.forEach(p => { propOptions += `<option value="${p.name}">${p.name}</option>`; });
+    propOptions += `</optgroup>`;
+  });
+
+  let showingCards = '';
+  if (showings.length) {
+    const sorted = [...showings].sort((a, b) => {
+      // Sort by time
+      const toMins = t => {
+        if (!t) return 9999;
+        const m = t.match(/(\d+):(\d+)\s*(AM|PM)/i);
+        if (!m) return 9999;
+        let h = parseInt(m[1]), min = parseInt(m[2]);
+        if (m[3].toUpperCase() === 'PM' && h !== 12) h += 12;
+        if (m[3].toUpperCase() === 'AM' && h === 12) h = 0;
+        return h * 60 + min;
+      };
+      return toMins(a.time) - toMins(b.time);
+    });
+
+    sorted.forEach(s => {
+      const statusClass = s.outcome === 'attended' ? 'status-attended'
+        : s.outcome === 'noshow' ? 'status-noshow'
+        : s.status === 'confirmed' ? 'status-confirmed'
+        : s.status === 'misassigned' ? 'status-misassigned'
+        : 'status-pending';
+
+      const pillClass = s.outcome === 'attended' ? 'pill-attended'
+        : s.outcome === 'noshow' ? 'pill-noshow'
+        : s.status === 'confirmed' ? 'pill-confirmed'
+        : s.status === 'misassigned' ? 'pill-misassigned'
+        : 'pill-pending';
+
+      const pillLabel = s.outcome === 'attended' ? '✅ Attended'
+        : s.outcome === 'noshow' ? '❌ No Show'
+        : s.status === 'confirmed' ? '✅ Confirmed'
+        : s.status === 'misassigned' ? '⚠️ Check Assignment'
+        : '⏳ Pending';
+
+      const leadsHtml = s.leads && s.leads.length
+        ? s.leads.map(l => `
+          <div class="showing-lead-row">
+            <span class="showing-lead-name">${l.name || 'Lead'}</span>
+            <span class="showing-lead-phone">${l.phone
+              ? `<a href="tel:${l.phone.replace(/\D/g,'')}">📞 ${l.phone}</a>`
+              : l.email ? `<a href="mailto:${l.email}">✉️ ${l.email}</a>` : ''
+            }</span>
+          </div>`).join('')
+        : '';
+
+      const noteHtml = s.note
+        ? `<div class="showing-note">⚠️ ${s.note}</div>`
+        : '';
+
+      // Outcome section
+      let outcomeHtml = '';
+      if (s.outcome === 'attended') {
+        if (s.dbEntry) {
+          outcomeHtml = `
+            <div class="showing-outcome-badge outcome-attended">
+              ✅ Attended — ${s.dbEntry.name} added to database as a lead for ${s.dbEntry.property}
+            </div>
+            <div style="margin-top:8px;">
+              <button class="btn-undo-showing" onclick="undoShowingOutcome('${s.id}')">↩ Undo</button>
+            </div>`;
+        } else {
+          // Show the add-to-database form
+          outcomeHtml = `
+            <div class="showing-outcome-badge outcome-attended" style="margin-bottom:8px;">
+              ✅ Attended — Add to your lead database below
+            </div>
+            <div class="add-db-form">
+              <h4>➕ Add to Lead Database</h4>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Name</label>
+                  <input id="db-name-${s.id}" type="text" placeholder="Full name" value="${s.leads && s.leads[0] && s.leads[0].name && s.leads[0].name !== 'Lead' ? s.leads[0].name : ''}">
+                </div>
+                <div class="form-group">
+                  <label>Phone</label>
+                  <input id="db-phone-${s.id}" type="tel" placeholder="(843) 555-0100" value="${s.leads && s.leads[0] && s.leads[0].phone ? s.leads[0].phone : ''}">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Property Interested In</label>
+                <select id="db-prop-${s.id}">${propOptions}</select>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Heat Score (1–10)</label>
+                  <input id="db-score-${s.id}" type="number" min="1" max="10" value="7">
+                </div>
+                <div class="form-group">
+                  <label>Notes</label>
+                  <input id="db-notes-${s.id}" type="text" placeholder="Quick note...">
+                </div>
+              </div>
+              <div class="add-db-form-actions">
+                <button class="btn-save-db" onclick="saveToDatabase('${s.id}')">Save to Database</button>
+                <button class="btn-cancel-db" onclick="undoShowingOutcome('${s.id}')">Cancel</button>
+              </div>
+            </div>`;
+        }
+      } else if (s.outcome === 'noshow') {
+        outcomeHtml = `
+          <div class="showing-outcome-badge outcome-noshow">❌ No Show logged</div>
+          <div style="margin-top:8px;">
+            <button class="btn-undo-showing" onclick="undoShowingOutcome('${s.id}')">↩ Undo</button>
+          </div>`;
+      } else {
+        // No outcome yet — show action buttons
+        outcomeHtml = `
+          <div class="showing-actions">
+            <button class="btn-attended" onclick="markShowingOutcome('${s.id}','attended')">✅ Attended</button>
+            <button class="btn-noshow" onclick="markShowingOutcome('${s.id}','noshow')">❌ No Show</button>
+          </div>`;
+      }
+
+      showingCards += `
+        <div class="showing-card ${statusClass}">
+          <div class="showing-header">
+            <div>
+              <div class="showing-time">${s.time || '—'}</div>
+              <div class="showing-address">📍 ${s.address}</div>
+            </div>
+            <span class="showing-status-pill ${pillClass}">${pillLabel}</span>
+          </div>
+          ${noteHtml}
+          ${leadsHtml ? `<div class="showing-leads">${leadsHtml}</div>` : ''}
+          ${outcomeHtml}
+        </div>`;
+    });
+  }
+
+  section.innerHTML = `
+    <div class="showings-paste-box">
+      <label>📋 Load Today's Schedule from Claude Morning Brief</label>
+      <textarea id="showings-paste-input" placeholder='Paste the JSON from your morning brief here, e.g.:
+[{"time":"1:00 PM","address":"2423 Crestview Dr","status":"confirmed","leads":[{"name":"Lead","phone":"(704) 835-9148"}]}]'></textarea>
+
+```
+  <div class="showings-paste-actions">
+    <button class="btn-load-showings" onclick="loadShowingsFromJSON()">Load Showings</button>
+    <button class="btn-clear-showings" onclick="clearShowings()">Clear All</button>
+    <span class="paste-hint">Data persists between sessions</span>
+  </div>
+</div>
+
+${showings.length === 0
+  ? `<div class="empty"><div class="icon">📅</div><p>No showings loaded yet — paste your JSON from the morning brief above.</p></div>`
+  : `<div style="font-size:12px;font-weight:700;color:var(--text2);margin:-4px 0 4px 4px;">${today} · ${showings.length} showing${showings.length!==1?'s':''}</div>
+     <div class="leads-grid">${showingCards}</div>`
+}`;
+```
+
+}
+
 // ── PROPERTY DROPDOWN ─────────────────────────────────────────────────────────
 function togglePropDropdown() {
-  propDropOpen = !propDropOpen;
-  const menu = document.getElementById('prop-dropdown-menu');
-  const btn  = document.getElementById('prop-dropdown-btn');
-  menu.style.display = propDropOpen ? 'block' : 'none';
-  btn.classList.toggle('open', propDropOpen);
+propDropOpen = !propDropOpen;
+const menu = document.getElementById(‘prop-dropdown-menu’);
+const btn  = document.getElementById(‘prop-dropdown-btn’);
+menu.style.display = propDropOpen ? ‘block’ : ‘none’;
+btn.classList.toggle(‘open’, propDropOpen);
 }
 
 function closePropDropdown() {
-  propDropOpen = false;
-  document.getElementById('prop-dropdown-menu').style.display = 'none';
-  document.getElementById('prop-dropdown-btn').classList.remove('open');
+propDropOpen = false;
+document.getElementById(‘prop-dropdown-menu’).style.display = ‘none’;
+document.getElementById(‘prop-dropdown-btn’).classList.remove(‘open’);
 }
 
-document.addEventListener('click', function(e) {
-  if (!document.getElementById('prop-dropdown-wrap').contains(e.target)) closePropDropdown();
+document.addEventListener(‘click’, function(e) {
+if (!document.getElementById(‘prop-dropdown-wrap’).contains(e.target)) closePropDropdown();
 });
 
 function renderPropDropdown() {
-  const menu = document.getElementById('prop-dropdown-menu');
-  const label = document.getElementById('prop-dropdown-label');
-  const btn   = document.getElementById('prop-dropdown-btn');
+const menu  = document.getElementById(‘prop-dropdown-menu’);
+const label = document.getElementById(‘prop-dropdown-label’);
+const btn   = document.getElementById(‘prop-dropdown-btn’);
 
-  // Filter props by current city
-  let visibleProps = currentCity === 'all'
-    ? properties
-    : properties.filter(p => p.city === currentCity);
+let visibleProps = currentCity === ‘all’ ? properties : properties.filter(p => p.city === currentCity);
+const groups = {};
+visibleProps.forEach(p => { if (!groups[p.city]) groups[p.city] = []; groups[p.city].push(p); });
 
-  // Group by city
-  const groups = {};
-  visibleProps.forEach(p => {
-    if (!groups[p.city]) groups[p.city] = [];
-    groups[p.city].push(p);
-  });
+let html = `<div class="all-option ${currentProp==='all'?'selected':''}" onclick="selectProp('all')">All Properties</div>`;
+CITIES.forEach(city => {
+if (!groups[city] || !groups[city].length) return;
+html += `<div class="city-group-label">${city}</div>`;
+groups[city].forEach(p => {
+html += `<div class="prop-option ${currentProp===p.name?'selected':''}" onclick="selectProp('${p.name.replace(/'/g,"\\'")}')"> <span class="city-dot" style="background:${CITY_DOTS[p.city]||'#ccc'}"></span>${p.name} </div>`;
+});
+});
 
-  let html = `<div class="all-option ${currentProp==='all'?'selected':''}" onclick="selectProp('all')">All Properties</div>`;
-  CITIES.forEach(city => {
-    if (!groups[city] || !groups[city].length) return;
-    html += `<div class="city-group-label">${city}</div>`;
-    groups[city].forEach(p => {
-      html += `<div class="prop-option ${currentProp===p.name?'selected':''}" onclick="selectProp('${p.name.replace(/'/g,"\\'")}')">
-        <span class="city-dot" style="background:${CITY_DOTS[p.city]||'#ccc'}"></span>${p.name}
-      </div>`;
-    });
-  });
-
-  menu.innerHTML = html;
-  label.textContent = currentProp === 'all' ? 'All Properties' : currentProp;
-  btn.classList.toggle('has-selection', currentProp !== 'all');
+menu.innerHTML = html;
+label.textContent = currentProp === ‘all’ ? ‘All Properties’ : currentProp;
+btn.classList.toggle(‘has-selection’, currentProp !== ‘all’);
 }
 
-function selectProp(name) {
-  currentProp = name; closePropDropdown(); render();
-}
+function selectProp(name) { currentProp = name; closePropDropdown(); render(); }
 
 // ── CITY FILTER ───────────────────────────────────────────────────────────────
 function setCity(city) {
-  currentCity = city;
-  currentProp = 'all'; // reset prop filter when city changes
-  document.querySelectorAll('.city-btn').forEach(b => b.classList.toggle('active', b.dataset.city === city));
-  render();
+currentCity = city; currentProp = ‘all’;
+document.querySelectorAll(’.city-btn’).forEach(b => b.classList.toggle(‘active’, b.dataset.city === city));
+render();
 }
 
 // ── TAB ───────────────────────────────────────────────────────────────────────
 function setTab(t, el) {
-  currentTab = t;
-  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
-  el.classList.add('active'); render();
+currentTab = t;
+document.querySelectorAll(’.tab’).forEach(b => b.classList.remove(‘active’));
+el.classList.add(‘active’); render();
 }
 
 // ── RENDER LEADS ──────────────────────────────────────────────────────────────
 function renderLeads() {
-  const grid = document.getElementById('leads-grid');
-  let filtered = leads.filter(l => {
-    if (currentProp !== 'all' && l.property !== currentProp) return false;
-    if (currentCity !== 'all' && getPropCity(l.property) !== currentCity) return false;
-    return true;
-  });
+const grid = document.getElementById(‘leads-grid’);
+let filtered = leads.filter(l => {
+if (currentProp !== ‘all’ && l.property !== currentProp) return false;
+if (currentCity !== ‘all’ && getPropCity(l.property) !== currentCity) return false;
+return true;
+});
 
-  if (currentTab === 'active')   filtered = filtered.filter(l => !l.disabled);
-  if (currentTab === 'disabled') filtered = filtered.filter(l => l.disabled);
-  if (currentTab === 'due')      filtered = filtered.filter(l => { if (l.disabled) return false; const s = getFollowupStatus(l); return s.overdue || s.dueToday; });
+if (currentTab === ‘active’)   filtered = filtered.filter(l => !l.disabled);
+if (currentTab === ‘disabled’) filtered = filtered.filter(l => l.disabled);
+if (currentTab === ‘due’)      filtered = filtered.filter(l => { if (l.disabled) return false; const s = getFollowupStatus(l); return s.overdue || s.dueToday; });
 
-  filtered.sort((a, b) => {
-    if (a.disabled && !b.disabled) return 1; if (!a.disabled && b.disabled) return -1;
-    const sa = getFollowupStatus(a), sb = getFollowupStatus(b);
-    if (sa.overdue && !sb.overdue) return -1; if (!sa.overdue && sb.overdue) return 1;
-    if (sa.dueToday && !sb.dueToday) return -1; if (!sa.dueToday && sb.dueToday) return 1;
-    return b.score - a.score;
-  });
+filtered.sort((a, b) => {
+if (a.disabled && !b.disabled) return 1; if (!a.disabled && b.disabled) return -1;
+const sa = getFollowupStatus(a), sb = getFollowupStatus(b);
+if (sa.overdue && !sb.overdue) return -1; if (!sa.overdue && sb.overdue) return 1;
+if (sa.dueToday && !sb.dueToday) return -1; if (!sa.dueToday && sb.dueToday) return 1;
+return b.score - a.score;
+});
 
-  if (!filtered.length) {
-    grid.innerHTML = `<div class="empty"><div class="icon">🌸</div><p>No leads here yet.</p></div>`;
-    return;
-  }
+if (!filtered.length) {
+grid.innerHTML = `<div class="empty"><div class="icon">🌸</div><p>No leads here yet.</p></div>`;
+return;
+}
 
-  grid.innerHTML = filtered.map(l => {
-    const st   = getFollowupStatus(l);
-    const fi   = l.disabled ? { emoji: '💤', cls: 'dis', label: '', trackCls: 'dis' } : getFireInfo(l.score);
-    const pct  = (l.score / 10) * 100;
-    const city = getPropCity(l.property);
-    const last = new Date(l.lastFollowup || l.created).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-    const icon = st.cardCls === 'overdue' ? '⚠️' : st.cardCls === 'due-today' ? '⏰' : st.cardCls === 'ok' ? '✅' : '💤';
-    return `
-    <div class="lead-card ${st.cardCls}" data-id="${l.id}">
-      <div class="card-top">
-        <div class="fire-badge">
-          <div class="fire-emoji">${fi.emoji}</div>
-          <div class="fire-score ${fi.cls}">${l.score}/10</div>
-        </div>
-        <div class="lead-main">
-          <div class="lead-name">
-            ${l.name}
-            <span class="prop-pill">${l.property}</span>
-            ${city ? `<span class="city-pill ${city}">${city}</span>` : ''}
-            ${l.disabled ? `<span class="disabled-pill">disabled</span>` : ''}
-          </div>
-          <div class="lead-meta">
-            ${l.phone ? `<span>📞 ${l.phone}</span>` : ''}
-            <span>📅 ${last}</span>
-            ${l.notes ? `<span>📝 ${l.notes.substring(0,36)}${l.notes.length>36?'…':''}</span>` : ''}
-          </div>
-        </div>
-      </div>
-      <div class="heat-bar-wrap">
-        <div class="heat-bar-track"><div class="heat-bar-fill ${fi.trackCls}" style="width:${pct}%"></div></div>
-        <span class="heat-label ${fi.trackCls}">${fi.label}</span>
-      </div>
-      <div class="followup-row">
-        <span class="status-chip ${st.chipCls}">${icon} ${st.label}</span>
-        <div class="card-actions">
-          ${!l.disabled
-            ? `<button class="btn-done action-btn" data-action="done" data-id="${l.id}">✓ Done</button>`
-            : `<button class="btn-reactivate action-btn" data-action="reactivate" data-id="${l.id}">↩ Reactivate</button>`}
-          <button class="btn-edit action-btn" data-action="edit" data-id="${l.id}">Edit</button>
-          <button class="btn-delete action-btn" data-action="options" data-id="${l.id}">• • •</button>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
+grid.innerHTML = filtered.map(l => {
+const st   = getFollowupStatus(l);
+const fi   = l.disabled ? { emoji: ‘💤’, cls: ‘dis’, label: ‘’, trackCls: ‘dis’ } : getFireInfo(l.score);
+const pct  = (l.score / 10) * 100;
+const city = getPropCity(l.property);
+const last = new Date(l.lastFollowup || l.created).toLocaleDateString(‘en-US’, { month: ‘short’, day: ‘numeric’ });
+const icon = st.cardCls === ‘overdue’ ? ‘⚠️’ : st.cardCls === ‘due-today’ ? ‘⏰’ : st.cardCls === ‘ok’ ? ‘✅’ : ‘💤’;
+return `<div class="lead-card ${st.cardCls}" data-id="${l.id}"> <div class="card-top"> <div class="fire-badge"> <div class="fire-emoji">${fi.emoji}</div> <div class="fire-score ${fi.cls}">${l.score}/10</div> </div> <div class="lead-main"> <div class="lead-name"> ${l.name} <span class="prop-pill">${l.property}</span> ${city ?`<span class="city-pill ${city}">${city}</span>`: ''} ${l.disabled ?`<span class="disabled-pill">disabled</span>`: ''} </div> <div class="lead-meta"> ${l.phone ?`<span>📞 ${l.phone}</span>`: ''} <span>📅 ${last}</span> ${l.notes ?`<span>📝 ${l.notes.substring(0,36)}${l.notes.length>36?’…’:’’}</span>`: ''} </div> </div> </div> <div class="heat-bar-wrap"> <div class="heat-bar-track"><div class="heat-bar-fill ${fi.trackCls}" style="width:${pct}%"></div></div> <span class="heat-label ${fi.trackCls}">${fi.label}</span> </div> <div class="followup-row"> <span class="status-chip ${st.chipCls}">${icon} ${st.label}</span> <div class="card-actions"> ${!l.disabled ?`<button class="btn-done action-btn" data-action="done" data-id="${l.id}">✓ Done</button>`:`<button class="btn-reactivate action-btn" data-action="reactivate" data-id="${l.id}">↩ Reactivate</button>`} <button class="btn-edit action-btn" data-action="edit" data-id="${l.id}">Edit</button> <button class="btn-delete action-btn" data-action="options" data-id="${l.id}">• • •</button> </div> </div> </div>`;
+}).join(’’);
 }
 
 // ── ACTIONS ───────────────────────────────────────────────────────────────────
-document.addEventListener('click', function(e) {
-  const btn = e.target.closest('.action-btn'); if (!btn) return;
-  const id = btn.dataset.id, action = btn.dataset.action;
-  if (action === 'done')       markFollowup(id);
-  else if (action === 'reactivate') reactivateLead(id);
-  else if (action === 'edit')  editLead(id);
-  else if (action === 'options') openOptionsModal(id);
+document.addEventListener(‘click’, function(e) {
+const btn = e.target.closest(’.action-btn’); if (!btn) return;
+const id = btn.dataset.id, action = btn.dataset.action;
+if (action === ‘done’)            markFollowup(id);
+else if (action === ‘reactivate’) reactivateLead(id);
+else if (action === ‘edit’)       editLead(id);
+else if (action === ‘options’)    openOptionsModal(id);
 });
 
 function markFollowup(id) {
-  const l = leads.find(x => x.id === id); if (!l) return;
-  l.lastFollowup = Date.now(); save(); render();
-  showNotify(`✅ Follow-up logged for ${l.name}. Next in ${getFollowupHours(l.score)}h.`);
-  scheduleNotifications();
+const l = leads.find(x => x.id === id); if (!l) return;
+l.lastFollowup = Date.now(); save(); render();
+showNotify(`✅ Follow-up logged for ${l.name}. Next in ${getFollowupHours(l.score)}h.`);
+scheduleNotifications();
 }
 
 function reactivateLead(id) {
-  const l = leads.find(x => x.id === id); if (!l) return;
-  l.disabled = false; l.disabledReason = null; l.lowScoreSince = null; l.lastFollowup = Date.now();
-  save(); render();
+const l = leads.find(x => x.id === id); if (!l) return;
+l.disabled = false; l.disabledReason = null; l.lowScoreSince = null; l.lastFollowup = Date.now();
+save(); render();
 }
 
-function deleteLead(id) {
-  leads = leads.filter(x => x.id !== id); save(); render();
-}
+function deleteLead(id) { leads = leads.filter(x => x.id !== id); save(); render(); }
 
 function movingIn(id) {
-  const l = leads.find(x => x.id === id); if (!l) return;
-  const prop = l.property;
-  l.disabled = true; l.disabledReason = '🏠 Moved In!'; l.movedIn = true;
-  leads.forEach(o => { if (o.id !== id && o.property === prop && !o.disabled) { o.disabled = true; o.disabledReason = 'Property filled'; } });
-  save(); closeOptionsModal(); render();
-  showNotify(`🏠 ${l.name} moved in! Other leads for ${prop} deactivated.`);
+const l = leads.find(x => x.id === id); if (!l) return;
+const prop = l.property;
+l.disabled = true; l.disabledReason = ‘🏠 Moved In!’; l.movedIn = true;
+leads.forEach(o => { if (o.id !== id && o.property === prop && !o.disabled) { o.disabled = true; o.disabledReason = ‘Property filled’; } });
+save(); closeOptionsModal(); render();
+showNotify(`🏠 ${l.name} moved in! Other leads for ${prop} deactivated.`);
 }
 
 function openOptionsModal(id) {
-  const l = leads.find(x => x.id === id); if (!l) return;
-  document.getElementById('options-lead-name').textContent = l.name;
-  document.getElementById('options-modal').dataset.leadId  = id;
-  document.getElementById('options-modal').style.display   = 'flex';
+const l = leads.find(x => x.id === id); if (!l) return;
+document.getElementById(‘options-lead-name’).textContent = l.name;
+document.getElementById(‘options-modal’).dataset.leadId  = id;
+document.getElementById(‘options-modal’).style.display   = ‘flex’;
 }
-function closeOptionsModal() { document.getElementById('options-modal').style.display = 'none'; }
+function closeOptionsModal() { document.getElementById(‘options-modal’).style.display = ‘none’; }
 
 // ── LEAD MODAL ────────────────────────────────────────────────────────────────
 function editLead(id) {
-  const l = leads.find(x => x.id === id); if (!l) return;
-  editingId = id;
-  document.getElementById('f-name').value  = l.name;
-  document.getElementById('f-phone').value = l.phone || '';
-  document.getElementById('f-notes').value = l.notes || '';
-  document.getElementById('f-score').value = l.score;
-  updateScore(l.score);
-  populatePropertySelect(l.property);
-  document.getElementById('modal-title').textContent = 'Edit Lead';
-  document.getElementById('modal').style.display = 'flex';
+const l = leads.find(x => x.id === id); if (!l) return;
+editingId = id;
+document.getElementById(‘f-name’).value  = l.name;
+document.getElementById(‘f-phone’).value = l.phone || ‘’;
+document.getElementById(‘f-notes’).value = l.notes || ‘’;
+document.getElementById(‘f-score’).value = l.score;
+updateScore(l.score);
+populatePropertySelect(l.property);
+document.getElementById(‘modal-title’).textContent = ‘Edit Lead’;
+document.getElementById(‘modal’).style.display = ‘flex’;
 }
 
 function openModal() {
-  editingId = null;
-  document.getElementById('f-name').value  = '';
-  document.getElementById('f-phone').value = '';
-  document.getElementById('f-notes').value = '';
-  document.getElementById('f-score').value = 5;
-  updateScore(5);
-  populatePropertySelect();
-  document.getElementById('modal-title').textContent = 'Add Lead';
-  document.getElementById('modal').style.display = 'flex';
+editingId = null;
+document.getElementById(‘f-name’).value  = ‘’;
+document.getElementById(‘f-phone’).value = ‘’;
+document.getElementById(‘f-notes’).value = ‘’;
+document.getElementById(‘f-score’).value = 5;
+updateScore(5);
+populatePropertySelect();
+document.getElementById(‘modal-title’).textContent = ‘Add Lead’;
+document.getElementById(‘modal’).style.display = ‘flex’;
 }
 
-function closeModal() { document.getElementById('modal').style.display = 'none'; }
+function closeModal() { document.getElementById(‘modal’).style.display = ‘none’; }
 
 function populatePropertySelect(selected) {
-  const sel = document.getElementById('f-property');
-  if (!properties.length) { sel.innerHTML = `<option value="">— Add a property first —</option>`; return; }
-  let html = '';
-  CITIES.forEach(city => {
-    const cityProps = properties.filter(p => p.city === city);
-    if (!cityProps.length) return;
-    html += `<optgroup label="${city}">`;
-    cityProps.forEach(p => { html += `<option value="${p.name}" ${selected===p.name?'selected':''}>${p.name}</option>`; });
-    html += `</optgroup>`;
-  });
-  sel.innerHTML = html;
+const sel = document.getElementById(‘f-property’);
+if (!properties.length) { sel.innerHTML = `<option value="">— Add a property first —</option>`; return; }
+let html = ‘’;
+CITIES.forEach(city => {
+const cityProps = properties.filter(p => p.city === city);
+if (!cityProps.length) return;
+html += `<optgroup label="${city}">`;
+cityProps.forEach(p => { html += `<option value="${p.name}" ${selected===p.name?'selected':''}>${p.name}</option>`; });
+html += `</optgroup>`;
+});
+sel.innerHTML = html;
 }
 
 function updateScore(v) {
-  v = parseInt(v);
-  const fi = getFireInfo(v);
-  document.getElementById('score-big').textContent   = v;
-  document.getElementById('score-label').textContent = fi.label;
-  document.getElementById('big-fire').textContent    = fi.emoji;
-  const colors = { hot: '#e05a20', warm: '#c4860a', cold: '#5598d0' };
-  const c = colors[fi.cls] || '#9a7f70';
-  document.getElementById('score-big').style.color   = c;
-  document.getElementById('score-label').style.color = c;
-  const pct = ((v - 1) / 9) * 100;
-  document.getElementById('f-score').style.background =
-    `linear-gradient(90deg, #f5b8a0 0%, #ff6b35 ${pct}%, #ecddd3 ${pct}%, #ecddd3 100%)`;
+v = parseInt(v);
+const fi = getFireInfo(v);
+document.getElementById(‘score-big’).textContent   = v;
+document.getElementById(‘score-label’).textContent = fi.label;
+document.getElementById(‘big-fire’).textContent    = fi.emoji;
+const colors = { hot: ‘#e05a20’, warm: ‘#c4860a’, cold: ‘#5598d0’ };
+const c = colors[fi.cls] || ‘#9a7f70’;
+document.getElementById(‘score-big’).style.color   = c;
+document.getElementById(‘score-label’).style.color = c;
+const pct = ((v - 1) / 9) * 100;
+document.getElementById(‘f-score’).style.background =
+`linear-gradient(90deg, #f5b8a0 0%, #ff6b35 ${pct}%, #ecddd3 ${pct}%, #ecddd3 100%)`;
 }
 
 function saveLead() {
-  const name = document.getElementById('f-name').value.trim();
-  if (!name) { alert('Name is required.'); return; }
-  const score    = parseInt(document.getElementById('f-score').value);
-  const property = document.getElementById('f-property').value;
-  if (!property) { alert('Please add a property first.'); return; }
+const name = document.getElementById(‘f-name’).value.trim();
+if (!name) { alert(‘Name is required.’); return; }
+const score    = parseInt(document.getElementById(‘f-score’).value);
+const property = document.getElementById(‘f-property’).value;
+if (!property) { alert(‘Please add a property first.’); return; }
 
-  if (editingId) {
-    const l = leads.find(x => x.id === editingId), oldScore = l.score;
-    l.name = name; l.phone = document.getElementById('f-phone').value.trim();
-    l.notes = document.getElementById('f-notes').value.trim();
-    l.property = property; l.score = score;
-    if (score > 5) l.lowScoreSince = null;
-    if (score <= 5 && oldScore > 5) l.lowScoreSince = Date.now();
-  } else {
-    const now = Date.now();
-    leads.push({ id: 'l_'+now+Math.random().toString(36).slice(2), name, phone: document.getElementById('f-phone').value.trim(), notes: document.getElementById('f-notes').value.trim(), property, score, created: now, lastFollowup: null, lowScoreSince: score <= 5 ? now : null, disabled: false });
-  }
-  save(); closeModal(); render(); scheduleNotifications();
+if (editingId) {
+const l = leads.find(x => x.id === editingId), oldScore = l.score;
+l.name = name; l.phone = document.getElementById(‘f-phone’).value.trim();
+l.notes = document.getElementById(‘f-notes’).value.trim();
+l.property = property; l.score = score;
+if (score > 5) l.lowScoreSince = null;
+if (score <= 5 && oldScore > 5) l.lowScoreSince = Date.now();
+} else {
+const now = Date.now();
+leads.push({ id: ‘l_’+now+Math.random().toString(36).slice(2), name, phone: document.getElementById(‘f-phone’).value.trim(), notes: document.getElementById(‘f-notes’).value.trim(), property, score, created: now, lastFollowup: null, lowScoreSince: score <= 5 ? now : null, disabled: false });
+}
+save(); closeModal(); render(); scheduleNotifications();
 }
 
 // ── PROPERTY MANAGER ──────────────────────────────────────────────────────────
 function openPropModal() {
-  renderPropGroupList();
-  document.getElementById('new-prop-input').value = '';
-  document.getElementById('prop-modal').style.display = 'flex';
+renderPropGroupList();
+document.getElementById(‘new-prop-input’).value = ‘’;
+document.getElementById(‘prop-modal’).style.display = ‘flex’;
 }
-function closePropModal() { document.getElementById('prop-modal').style.display = 'none'; render(); }
+function closePropModal() { document.getElementById(‘prop-modal’).style.display = ‘none’; render(); }
 
 function renderPropGroupList() {
-  const el = document.getElementById('prop-city-groups');
-  let html = '';
-  CITIES.forEach(city => {
-    const cityProps = properties.filter(p => p.city === city);
-    if (!cityProps.length) return;
-    html += `<div><div class="prop-city-section-label">${city}</div><div class="prop-items-row">`;
-    cityProps.forEach((p, _) => {
-      const idx = properties.indexOf(p);
-      html += `<div class="prop-item-mgr ${city}">${p.name}<button onclick="removeProp(${idx})">×</button></div>`;
-    });
-    html += `</div></div>`;
-  });
-  el.innerHTML = html || `<p style="color:var(--text3);font-size:13px;font-weight:600;margin-top:8px;">No properties yet.</p>`;
+const el = document.getElementById(‘prop-city-groups’);
+let html = ‘’;
+CITIES.forEach(city => {
+const cityProps = properties.filter(p => p.city === city);
+if (!cityProps.length) return;
+html += `<div><div class="prop-city-section-label">${city}</div><div class="prop-items-row">`;
+cityProps.forEach((p) => {
+const idx = properties.indexOf(p);
+html += `<div class="prop-item-mgr ${city}">${p.name}<button onclick="removeProp(${idx})">×</button></div>`;
+});
+html += `</div></div>`;
+});
+el.innerHTML = html || `<p style="color:var(--text3);font-size:13px;font-weight:600;margin-top:8px;">No properties yet.</p>`;
 }
 
 function addProperty() {
-  const name = document.getElementById('new-prop-input').value.trim();
-  const city = document.getElementById('new-prop-city').value;
-  if (!name || properties.find(p => p.name === name)) return;
-  properties.push({ name, city }); save(); renderPropGroupList();
-  document.getElementById('new-prop-input').value = '';
+const name = document.getElementById(‘new-prop-input’).value.trim();
+const city = document.getElementById(‘new-prop-city’).value;
+if (!name || properties.find(p => p.name === name)) return;
+properties.push({ name, city }); save(); renderPropGroupList();
+document.getElementById(‘new-prop-input’).value = ‘’;
 }
 
 function removeProp(i) {
-  const p = properties[i];
-  if (leads.some(l => l.property === p.name) && !confirm(`Leads exist under "${p.name}". Remove anyway?`)) return;
-  properties.splice(i, 1); save(); renderPropGroupList();
+const p = properties[i];
+if (leads.some(l => l.property === p.name) && !confirm(`Leads exist under "${p.name}". Remove anyway?`)) return;
+properties.splice(i, 1); save(); renderPropGroupList();
 }
 
 // ── NOTIFY BAR ────────────────────────────────────────────────────────────────
 function showNotify(msg) {
-  const bar = document.getElementById('notify-bar');
-  bar.textContent = msg; bar.classList.add('show');
-  setTimeout(() => bar.classList.remove('show'), 4000);
+const bar = document.getElementById(‘notify-bar’);
+bar.textContent = msg; bar.classList.add(‘show’);
+setTimeout(() => bar.classList.remove(‘show’), 4000);
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
@@ -825,7 +1106,6 @@ updateScore(5);
 render();
 initNotifications();
 setInterval(() => { checkAutoDisable(); render(); }, 5 * 60 * 1000);
-// Re-schedule notifications every hour in case app stays open
 setInterval(scheduleNotifications, 60 * 60 * 1000);
 </script>
 
